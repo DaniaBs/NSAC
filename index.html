@@ -1,0 +1,523 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Guía de los 14 retos Space Apps</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Lexend:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Concepto: carta de navegación espacial. Fondo azul marino del tríptico del colegio, un acento lima y un color por familia de retos. */
+:root {
+  --bg: #060c2e;
+  --bg2: #0b1442;
+  --card: #0e1850;
+  --line: #24307a;
+  --fg: #eef1ff;
+  --muted: #a9b2e0;
+  --lime: #dbf206;
+  --earth: #3ddc97;
+  --mars: #ff8a5b;
+  --astro: #8fb4ff;
+  --sky: #c6a2ff;
+  --play: #ffd166;
+  --f-display: "Unbounded", "Trebuchet MS", sans-serif;
+  --f-body: "Lexend", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 56px;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,.55), transparent),
+    radial-gradient(1px 1px at 120px 90px, rgba(255,255,255,.35), transparent),
+    radial-gradient(1.5px 1.5px at 190px 40px, rgba(219,242,6,.5), transparent),
+    radial-gradient(1px 1px at 70px 170px, rgba(255,255,255,.4), transparent),
+    radial-gradient(1px 1px at 220px 200px, rgba(255,255,255,.3), transparent);
+  background-size: 260px 260px;
+}
+.wrap { max-width: 1120px; margin: 0 auto; }
+a { color: var(--lime); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h2 { font-size: clamp(22px, 3.4vw, 32px); font-weight: 700; }
+h3 { font-size: 17px; font-weight: 500; }
+p { margin: 0; }
+.mono { font-family: var(--f-mono); }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--lime); }
+:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; border-radius: 6px; }
+
+/* HERO */
+.hero { display: grid; grid-template-columns: 1.3fr .7fr; gap: 24px; align-items: center; padding-block: 40px 28px; }
+.hero h1 { font-size: clamp(32px, 6vw, 58px); font-weight: 700; margin: 14px 0 16px; }
+.hero h1 em { font-style: normal; color: var(--lime); }
+.hero p.lead { color: var(--muted); font-size: 18px; max-width: 56ch; }
+.hero .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.fact { font-family: var(--f-mono); font-size: 12.5px; border: 1px solid var(--line); background: var(--bg2); padding: 6px 12px; border-radius: 999px; }
+.orbit { width: 100%; max-width: 300px; justify-self: center; }
+@media (max-width: 760px) { .hero { grid-template-columns: 1fr; } .orbit { max-width: 190px; order: -1; justify-self: start; } }
+
+/* SECCIONES */
+section.block { padding-block: 34px 6px; }
+.block > header { margin-bottom: 18px; display: grid; gap: 8px; }
+.block > header p { color: var(--muted); max-width: 70ch; }
+
+/* MAPA DE RETOS */
+.map { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.tile { text-decoration: none; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: grid; gap: 8px; align-content: start; transition: transform .15s, border-color .15s; min-width: 0; }
+.tile:hover { transform: translateY(-2px); border-color: var(--c); }
+.tile .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.tile .n { font-family: var(--f-display); font-size: 22px; color: var(--c); }
+.tile svg { width: 30px; height: 30px; color: var(--c); flex: none; }
+.tile .t { font-size: 13px; line-height: 1.3; font-weight: 500; }
+.tile .d { display: flex; gap: 3px; }
+.pip { width: 14px; height: 5px; border-radius: 3px; background: var(--line); }
+.pip.on { background: var(--c); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+/* FILTROS */
+.filters { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 10px max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px)); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.filters .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; max-width: 1120px; margin: 0 auto; padding-block: 3px; }
+.filters .lab { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); width: 92px; flex: none; }
+.chip { font: inherit; font-size: 13.5px; color: var(--fg); background: var(--bg2); border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; cursor: pointer; }
+.chip:hover { border-color: var(--lime); }
+.chip[aria-pressed="true"] { background: var(--lime); color: #101400; border-color: var(--lime); font-weight: 600; }
+.count { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); margin: 16px 0 0; }
+
+/* TARJETAS */
+.cards { display: grid; gap: 22px; margin-top: 16px; }
+.card { background: linear-gradient(180deg, var(--card), var(--bg2)); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; scroll-margin-top: 130px; }
+.card[hidden] { display: none; }
+.card > header { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; padding: 20px 22px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, color-mix(in srgb, var(--c) 18%, transparent), transparent 70%); }
+.badge { width: 76px; height: 76px; border-radius: 50%; border: 1.5px solid var(--c); display: grid; place-items: center; position: relative; color: var(--c); background: color-mix(in srgb, var(--c) 10%, var(--bg)); }
+.badge svg { width: 38px; height: 38px; }
+.badge b { position: absolute; top: -8px; left: -6px; font-family: var(--f-display); font-size: 13px; background: var(--c); color: #07103f; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; }
+.card h3 { font-size: clamp(17px, 2.6vw, 22px); font-weight: 700; }
+.card .en { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.pill { font-family: var(--f-mono); font-size: 11.5px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.pill.grp { color: var(--c); border-color: var(--c); }
+.pill.youth { background: var(--lime); color: #101400; border-color: var(--lime); font-weight: 500; }
+.body { display: grid; grid-template-columns: 1fr 1.15fr; }
+.body > div { padding: 20px 22px; min-width: 0; display: grid; gap: 16px; align-content: start; }
+.body > div + div { border-left: 1px solid var(--line); }
+.lbl { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--c); margin-bottom: 5px; }
+.body p, .body li { font-size: 15px; color: #d9defa; }
+.body ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.idea { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--bg); display: grid; gap: 6px; }
+.idea .h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.idea b { font-weight: 600; font-size: 15px; }
+.lv { font-family: var(--f-mono); font-size: 11px; padding: 2px 8px; border-radius: 6px; }
+.lv.b { background: color-mix(in srgb, var(--earth) 20%, transparent); color: var(--earth); }
+.lv.m { background: color-mix(in srgb, var(--play) 20%, transparent); color: var(--play); }
+.lv.r { background: color-mix(in srgb, var(--mars) 22%, transparent); color: var(--mars); }
+.idea p { font-size: 14.5px; }
+.idea .mat { font-size: 13px; color: var(--muted); }
+.idea .mat span { font-family: var(--f-mono); color: var(--c); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin-right: 6px; }
+.card > footer { display: grid; grid-template-columns: auto 1fr; gap: 10px 26px; padding: 16px 22px; border-top: 1px solid var(--line); background: var(--bg); align-items: center; }
+.meter { display: grid; gap: 6px; }
+.meter .pips { display: flex; gap: 4px; }
+.meter .pip { width: 26px; height: 8px; }
+.meter small { font-size: 12.5px; color: var(--muted); }
+.skills { display: flex; flex-wrap: wrap; gap: 6px; }
+.skills span { font-size: 12.5px; background: var(--bg2); border: 1px solid var(--line); border-radius: 8px; padding: 3px 9px; color: #d9defa; }
+@media (max-width: 800px) {
+  .body { grid-template-columns: 1fr; }
+  .body > div + div { border-left: 0; border-top: 1px solid var(--line); }
+  .card > footer { grid-template-columns: 1fr; }
+  .card > header { padding: 16px; } .body > div { padding: 16px; } .card > footer { padding: 14px 16px; }
+  .filters { position: static; backdrop-filter: none; }
+  .card { scroll-margin-top: 16px; }
+  .filters .lab { width: 100%; }
+  .badge { width: 62px; height: 62px; } .badge svg { width: 30px; height: 30px; }
+}
+
+/* PLAN Y ROLES */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 800px) { .two { grid-template-columns: 1fr; } }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; min-width: 0; }
+.panel h3 { margin-bottom: 14px; }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.tl li { display: grid; grid-template-columns: 96px 1fr; gap: 14px; padding: 10px 0; border-top: 1px dashed var(--line); font-size: 14.5px; }
+.tl li:first-child { border-top: 0; }
+.tl time { font-family: var(--f-mono); font-size: 12.5px; color: var(--lime); }
+.roles { display: grid; gap: 10px; }
+.role { display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: start; font-size: 14.5px; }
+.role i { font-style: normal; width: 38px; height: 38px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); display: grid; place-items: center; font-family: var(--f-display); color: var(--lime); font-size: 14px; }
+.role b { display: block; font-weight: 600; }
+.role span { color: var(--muted); }
+.gloss { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.gloss div { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 14px; color: #d9defa; }
+.gloss b { display: block; font-family: var(--f-mono); color: var(--lime); font-weight: 500; font-size: 13px; margin-bottom: 3px; }
+.notice { border: 1px solid var(--lime); border-radius: 16px; padding: 18px 20px; background: color-mix(in srgb, var(--lime) 7%, var(--bg)); display: grid; gap: 8px; font-size: 14.5px; }
+.notice ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.src { font-size: 13.5px; color: var(--muted); columns: 2 320px; padding-left: 18px; margin: 0; }
+.src li { margin-bottom: 4px; break-inside: avoid; overflow-wrap: anywhere; }
+footer.end { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .tile { transition: none; } }
+</style>
+
+<div class="wrap">
+
+<div class="hero">
+  <div>
+    <div class="eyebrow">NASA Space Apps Challenge 2026 · Jalapa · 14 y 15 de noviembre</div>
+    <h1>Los <em>14 retos</em>, explicados para ti</h1>
+    <p class="lead">Qué pide cada reto, con qué datos de la NASA se trabaja, qué proyecto puedes armar en 48 horas y qué necesitas para hacerlo. Pensada para el equipo de 4to bachillerato del Liceo TEC Chiquimula.</p>
+    <div class="facts">
+      <span class="fact">Equipos de hasta 6 personas</span>
+      <span class="fact">Datos abiertos y gratuitos de la NASA</span>
+      <span class="fact">No se exige saber programar</span>
+    </div>
+  </div>
+  <svg class="orbit" viewBox="0 0 300 300" role="img" aria-label="Órbitas con un planeta y satélites">
+    <circle cx="150" cy="150" r="118" fill="none" stroke="#24307a" stroke-width="1.5" stroke-dasharray="3 7"/>
+    <circle cx="150" cy="150" r="78" fill="none" stroke="#24307a" stroke-width="1.5"/>
+    <circle cx="150" cy="150" r="38" fill="#3ddc97" opacity=".92"/>
+    <path d="M122 140c10-8 22-6 28 2s18 8 26 2c-2 22-18 38-36 38-14 0-24-10-26-24 4-6 6-12 8-18z" fill="#1f9fd8" opacity=".7"/>
+    <circle cx="228" cy="150" r="9" fill="#dbf206"/>
+    <circle cx="86" cy="62" r="6" fill="#ff8a5b"/>
+    <circle cx="238" cy="238" r="5" fill="#c6a2ff"/>
+    <rect x="46" y="190" width="14" height="8" rx="2" fill="#8fb4ff" transform="rotate(-30 53 194)"/>
+    <path d="M40 188l-10 6M66 202l10-6" stroke="#8fb4ff" stroke-width="2"/>
+  </svg>
+</div>
+
+<section class="block" id="mapa">
+  <header>
+    <h2>Mapa de retos</h2>
+    <p>Toca un reto para ir a su ficha. Las barras muestran cuánto esfuerzo calculamos para un equipo sin experiencia previa en 48 horas. Es una estimación nuestra, distinta de la etiqueta de nivel que pone la organización en cada ficha.</p>
+  </header>
+  <div class="map" id="map"></div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--earth)"></i>Tierra</span>
+    <span><i class="dot" style="background:var(--mars)"></i>Luna y Marte</span>
+    <span><i class="dot" style="background:var(--astro)"></i>Astronautas y misiones</span>
+    <span><i class="dot" style="background:var(--sky)"></i>Cielo y astrofísica</span>
+    <span><i class="dot" style="background:var(--play)"></i>Juegos y arte</span>
+  </div>
+</section>
+
+<div class="filters" role="region" aria-label="Filtros de retos">
+  <div class="row"><span class="lab">Tema</span><span id="fg" style="display:contents"></span></div>
+  <div class="row"><span class="lab">Me gusta</span><span id="fi" style="display:contents"></span></div>
+</div>
+<p class="count" id="count" aria-live="polite"></p>
+
+<div class="cards" id="cards"></div>
+
+<section class="block" id="plan">
+  <header>
+    <h2>Cómo repartirse el trabajo</h2>
+    <p>Sugerencias para un equipo de 6. Los horarios son una propuesta; los horarios reales los define el colegio.</p>
+  </header>
+  <div class="two">
+    <div class="panel">
+      <h3>Plan de 48 horas</h3>
+      <ol class="tl">
+        <li><time>Sábado AM</time><span>Leer los briefs de 3 retos, votar y elegir uno. Revisar qué datos ofrece.</span></li>
+        <li><time>Sábado mediodía</time><span>Definir el problema en una frase: para quién es y qué resuelve. Bajar los datos.</span></li>
+        <li><time>Sábado PM</time><span>Primer prototipo feo pero funcional. Cada persona avanza en su parte.</span></li>
+        <li><time>Domingo AM</time><span>Mejorar, probar con alguien que no conozca el proyecto y arreglar fallos.</span></li>
+        <li><time>Domingo PM</time><span>Redactar la descripción, preparar la presentación y entregar antes del cierre.</span></li>
+      </ol>
+    </div>
+    <div class="panel">
+      <h3>Roles para 6 personas</h3>
+      <div class="roles">
+        <div class="role"><i>1</i><div><b>Coordinación</b><span>Reloj, tareas, decisiones y entrega final.</span></div></div>
+        <div class="role"><i>2</i><div><b>Datos e investigación</b><span>Consigue y limpia los datos, lee el brief con lupa.</span></div></div>
+        <div class="role"><i>3</i><div><b>Desarrollo</b><span>Programa la web, la app o el juego.</span></div></div>
+        <div class="role"><i>4</i><div><b>Diseño y experiencia</b><span>Pantallas, colores, imágenes y claridad de uso.</span></div></div>
+        <div class="role"><i>5</i><div><b>Hardware o ciencia</b><span>Prototipo físico, cálculos o validación científica.</span></div></div>
+        <div class="role"><i>6</i><div><b>Historia y presentación</b><span>Descripción, guion y exposición del proyecto.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="glosario">
+  <header><h2>Palabras que vas a encontrar</h2></header>
+  <div class="gloss">
+    <div><b>SAR</b>Radar de apertura sintética. Un satélite emite ondas de radar y mide el rebote. Funciona de noche y a través de nubes.</div>
+    <div><b>NISAR</b>Satélite de radar de la NASA y la agencia espacial de India (ISRO) que observa cómo cambia la superficie terrestre.</div>
+    <div><b>MODIS y VIIRS</b>Dos sensores de satélite que detectan focos de calor y fuego en la Tierra.</div>
+    <div><b>Punto caliente</b>Lugar donde el satélite detecta temperatura alta, normalmente un incendio o una quema.</div>
+    <div><b>CLPS</b>Servicios comerciales de carga a la Luna. La NASA contrata empresas para llevar instrumentos a la superficie lunar.</div>
+    <div><b>SPHEREx</b>Telescopio espacial que fotografía todo el cielo en muchos colores infrarrojos.</div>
+    <div><b>Microgravedad</b>Condición de casi ausencia de peso, como dentro de la Estación Espacial. Allí el fuego se comporta distinto.</div>
+    <div><b>Sonificación</b>Convertir datos en sonido: por ejemplo, una temperatura más alta suena más aguda.</div>
+    <div><b>Sitio análogo</b>Lugar de la Tierra que se parece a la Luna o a Marte y sirve para probar equipos.</div>
+    <div><b>NDVI</b>Índice que mide qué tan verde y sana está la vegetación vista desde un satélite.</div>
+  </div>
+</section>
+
+
+<section class="block" id="fuentes">
+  <footer class="end">Guía preparada para el equipo del Liceo TEC Chiquimula, noviembre de 2026. Consulta siempre la web oficial de Space Apps para la información vigente.</footer>
+</section>
+
+</div>
+
+<script>
+var G = {
+  earth: { n: "Tierra", c: "var(--earth)" },
+  mars: { n: "Luna y Marte", c: "var(--mars)" },
+  astro: { n: "Astronautas y misiones", c: "var(--astro)" },
+  sky: { n: "Cielo y astrofísica", c: "var(--sky)" },
+  play: { n: "Juegos y arte", c: "var(--play)" }
+};
+var INT = { code: "Programar", datos: "Analizar datos", diseno: "Diseñar", historia: "Contar historias", maker: "Electrónica y maquetas" };
+
+var ICONS = {
+  1: '<rect x="12" y="20" width="22" height="10" rx="2"/><circle cx="15" cy="37" r="4"/><circle cx="31" cy="37" r="4"/><path d="M34 25h6M40 25v-9M37 16h6M15 30v3M31 30v3"/>',
+  2: '<path d="M8 8v32h32"/><path d="M13 32l9-9 6 5 11-14"/><path d="M33 14h6v6"/>',
+  3: '<path d="M10 28a14 14 0 0 1 28 0v8a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4z"/><rect x="16" y="22" width="16" height="11" rx="5"/><path d="M20 26l3 2"/>',
+  4: '<path d="M18 14h12l4 14H14z"/><path d="M14 28l-6 12M34 28l6 12M6 40h8M34 40h8M20 14V9h8v5"/>',
+  5: '<circle cx="24" cy="24" r="17"/><path d="M9 25h9l3-7 5 14 3-7h10"/>',
+  6: '<circle cx="24" cy="32" r="3"/><path d="M17 27a10 10 0 0 1 14 0M11 21a18 18 0 0 1 26 0M5 15a26 26 0 0 1 38 0"/>',
+  7: '<path d="M24 42V22M14 42h20"/><path d="M24 29c-8 0-12-5-12-12 8 0 12 4 12 12z"/><path d="M24 22c0-6 4-10 12-10 0 6-5 10-12 10z"/>',
+  8: '<path d="M24 5c2 8 11 12 11 23a11 11 0 0 1-22 0c0-5 3-8 5-11 1 4 3 5 5 5 0-6-1-11 1-17z"/><path d="M24 40c-3 0-5-2-5-5 0-3 3-5 5-8 2 3 5 5 5 8 0 3-2 5-5 5z"/>',
+  9: '<circle cx="24" cy="24" r="17"/><path d="M12 14c6 3 6 9 12 9s8 6 8 12"/><circle cx="31" cy="15" r="2.4" fill="currentColor"/><circle cx="17" cy="31" r="2" fill="currentColor"/><circle cx="35" cy="28" r="2" fill="currentColor"/>',
+  10: '<path d="M4 40l13-21 7 11 5-7 15 17z"/><circle cx="36" cy="11" r="5"/>',
+  11: '<path d="M24 5a9 9 0 0 1 9 9c0 7-9 17-9 17S15 21 15 14a9 9 0 0 1 9-9z"/><circle cx="24" cy="14" r="3"/><path d="M8 42c6-5 10-1 15-3s9 0 17 3" stroke-dasharray="3 4"/>',
+  12: '<circle cx="24" cy="24" r="8"/><ellipse cx="24" cy="24" rx="19" ry="6" transform="rotate(-20 24 24)"/><circle cx="39" cy="9" r="1.6" fill="currentColor"/><circle cx="8" cy="38" r="1.4" fill="currentColor"/>',
+  13: '<path d="M24 5c6 5 8 12 8 20l-4 6H20l-4-6c0-8 2-15 8-20z"/><circle cx="24" cy="18" r="3"/><path d="M16 25l-6 8 8-2M32 25l6 8-8-2M21 36l3 7 3-7"/>',
+  14: '<path d="M8 22v4M14 16v16M20 9v30M26 15v18M32 7v34M38 17v14M43 22v4"/>'
+};
+function icon(n) { return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[n] + '</svg>'; }
+
+var R = [
+ { n: 1, es: "Abandonados pero no olvidados", en: "Abandoned but not Forgotten", g: "mars", lv: ["Intermedio", "Principiante/Juvenil"], youth: true, eff: 2, tags: ["historia", "diseno"],
+   que: "La NASA ha dejado rovers, sondas e instrumentos en la Luna, en Marte y en el espacio profundo. Cada uno hizo ciencia y luego quedó ahí. El reto es contar la historia de ese equipo para que chicos de escuela lo conozcan y entiendan qué descubrió.",
+   pide: "Una narrativa atractiva para público escolar: puede ser un cómic, una web, un video, un juego o una experiencia interactiva.",
+   datos: ["Biblioteca de imágenes y videos de la NASA (images.nasa.gov)", "Páginas de cada misión en NASA Science", "Fotos de la sonda LRO sobre los sitios de alunizaje"],
+   ideas: [
+     { t: "Cartas desde Marte", lv: "b", d: "Un rover \"escribe\" cartas a los estudiantes y cuenta qué midió, qué falló y cómo terminó su misión. Se publica como mini sitio o cómic digital.", mat: "Canva o Figma, texto y fotos de la NASA." },
+     { t: "Cementerio espacial interactivo", lv: "m", d: "Mapa de la Luna y Marte con una ficha por cada objeto abandonado: qué era, cuándo llegó y qué descubrió. Incluye trivia al final.", mat: "HTML y JavaScript, o una herramienta de mapas sin código." },
+     { t: "Museo 3D de misiones", lv: "r", d: "Sala virtual donde se pueden girar modelos 3D de rovers y módulos, con audio guía.", mat: "Three.js o Blender, modelos 3D gratuitos de la NASA." }
+   ],
+   skills: ["Redacción", "Diseño visual", "Investigación"] },
+ { n: 2, es: "Sé un detective de tendencias del sistema terrestre", en: "Be An Earth System Trend Detective!", g: "earth", lv: ["Avanzado"], youth: false, eff: 4, tags: ["datos", "code"],
+   que: "Los satélites y modelos de la NASA miden temperatura, lluvia, vegetación, hielo y más desde hace décadas. Debes elegir una variable, mostrar cómo cambia con el tiempo y responder qué cambia, dónde, cuánto y si el cambio es estadísticamente significativo. Una misma variable puede ir distinto en cada región.",
+   pide: "Visualizar una tendencia con rigor: gráficas claras, comparación entre regiones y una explicación honesta de qué tan seguro es el resultado.",
+   datos: ["NASA Earthdata Search y Giovanni", "NASA Earth Information Center", "Worldview y GIBS para mapas por fecha", "Vegetación (NDVI) y lluvia satelital"],
+   ideas: [
+     { t: "¿Más verde o más seco el oriente?", lv: "r", d: "Series de vegetación y lluvia de 2000 a hoy para una zona del Corredor Seco, con línea de tendencia y valor p.", mat: "Python (pandas, matplotlib) en Google Colab." },
+     { t: "Comparador de dos regiones", lv: "m", d: "El usuario marca dos puntos en un mapa y ve cuál cambió más y cuánto, en una gráfica fácil de leer.", mat: "Colab para procesar y una web simple para mostrar." },
+     { t: "Mi departamento en 25 años", lv: "b", d: "Línea de tiempo visual con capturas de Worldview y explicación de qué cambió y por qué importa.", mat: "Worldview, Canva o una presentación web." }
+   ],
+   skills: ["Estadística básica", "Python o Excel", "Gráficas"] },
+ { n: 3, es: "Construye un entrenador de misiones para jóvenes astronautas", en: "Build a Junior Astronaut Mission Trainer", g: "play", lv: ["Intermedio", "Principiante/Juvenil"], youth: true, eff: 3, tags: ["code", "diseno"],
+   que: "Un juego o app donde estudiantes dirigen un puesto avanzado en la Luna o en Marte. Deben equilibrar aire para respirar, protección contra radiación, energía y comida. Cada decisión afecta el éxito de la misión.",
+   pide: "Una experiencia interactiva y educativa que muestre las compensaciones reales de vivir lejos de la Tierra.",
+   datos: ["Arquitectura Luna a Marte de la NASA", "Información de soporte vital de la Estación Espacial", "Datos básicos de radiación y energía solar"],
+   ideas: [
+     { t: "Base Alfa por turnos", lv: "b", d: "Cada turno reparten energía, agua y cultivos con controles deslizantes. Aparecen eventos como tormentas solares.", mat: "HTML y JavaScript. Solo un navegador." },
+     { t: "Misión con historias", lv: "m", d: "Juego con personajes, decisiones y finales distintos según lo que el jugador priorice.", mat: "Scratch, Godot o Twine." },
+     { t: "Tablero físico con luces", lv: "r", d: "Maqueta de base con LEDs que muestran el nivel de cada recurso en tiempo real.", mat: "Arduino o ESP32, LEDs, cartón, cables." }
+   ],
+   skills: ["Lógica de juego", "Diseño de niveles", "Ciencia básica"] },
+ { n: 4, es: "Navegador de misiones lunares CLPS", en: "CLPS Lunar Mission Browser", g: "mars", lv: ["Avanzado", "Intermedio"], youth: false, eff: 4, tags: ["code", "datos"],
+   que: "La NASA contrata empresas para llevar cargas a la Luna. Hay que comparar sitios y fechas de alunizaje cerca del polo sur lunar. La herramienta debe mostrar dónde están el Sol y la Tierra respecto al horizonte, para estimar cuánta energía solar hay y cuándo se puede hablar directo con la Tierra.",
+   pide: "Una herramienta intuitiva para planificadores, docentes y público general.",
+   datos: ["Iluminación polar lunar (PGDA, NASA Goddard)", "Moon Trek", "Posiciones del Sol y la Tierra con efemérides (SPICE, Skyfield)"],
+   ideas: [
+     { t: "Calculadora de luz", lv: "m", d: "Eliges 3 a 5 sitios y ves una gráfica de horas de luz y de comunicación por día.", mat: "JavaScript o Python, y datos de iluminación." },
+     { t: "Simulador de horizonte", lv: "r", d: "Dibujo del horizonte lunar con el Sol y la Tierra moviéndose según la fecha elegida.", mat: "Skyfield (Python) y Canvas en la web." },
+     { t: "Guía visual de ventanas", lv: "b", d: "Infografía interactiva que explica con ejemplos qué es una ventana de comunicación y por qué importa.", mat: "Canva o una página web simple." }
+   ],
+   skills: ["Astronomía básica", "Programación", "Visualización"] },
+ { n: 5, es: "Software de monitoreo de salud para astronautas", en: "Create Health Monitoring Software for Astronauts on Space Missions", g: "astro", lv: ["Intermedio"], youth: false, eff: 3, tags: ["code", "datos", "maker"],
+   que: "En misiones largas el cuerpo sufre por radiación, aislamiento, gravedad alterada, cambios en el sistema inmune, pérdida de hueso, problemas del corazón y desgaste emocional. El reto pide software que recoja indicadores de salud y ayude al astronauta a evaluar su estado y decidir qué hacer.",
+   pide: "Un sistema útil para alguien que no puede ir al médico: claro, rápido y con recomendaciones seguras.",
+   datos: ["NASA Open Science Data Repository (OSDR)", "Informes del Programa de Investigación Humana de la NASA", "Estudio de gemelos de la NASA"],
+   ideas: [
+     { t: "Chequeo diario del astronauta", lv: "b", d: "Formulario de sueño, ánimo, ejercicio y dolor que devuelve un semáforo de alertas y consejos generales.", mat: "HTML y JavaScript, datos simulados." },
+     { t: "Pulsera prototipo", lv: "r", d: "Sensor de pulso conectado a una pantalla que muestra tendencias y avisa si algo se sale de lo normal.", mat: "ESP32 o micro:bit, sensor de ritmo cardíaco, pantalla OLED." },
+     { t: "Simulador de pérdida de hueso", lv: "m", d: "Gráfica de cómo cambia la densidad ósea según días de misión y minutos de ejercicio.", mat: "Hoja de cálculo o Python, con datos de ejemplo." }
+   ],
+   skills: ["Programación", "Biología básica", "Diseño centrado en personas"] },
+ { n: 6, es: "Bailando con los SAR", en: "Dancing with the SARs", g: "earth", lv: ["Avanzado", "Intermedio"], youth: false, eff: 5, tags: ["datos", "code"],
+   que: "NISAR es un satélite de radar de la NASA y la agencia espacial india. Mide con gran detalle cómo se mueve y cambia la superficie del planeta: humedales que se pierden, incendios, terremotos, cultivos y glaciares. Los datos de banda L ya son públicos.",
+   pide: "Una app interactiva que use datos de radar de NISAR para mostrar cambios en la superficie de cualquier lugar del mundo.",
+   datos: ["Datos NISAR en el archivo ASF DAAC de Earthdata", "Herramientas de ASF para buscar y descargar", "Imágenes de radar de otras misiones para comparar"],
+   ideas: [
+     { t: "¿Cómo ve un radar?", lv: "b", d: "Explicador visual que compara una foto normal y una imagen de radar de la misma zona.", mat: "Imágenes de ejemplo y una web simple." },
+     { t: "Antes y después", lv: "m", d: "Mapa con un deslizador que muestra el cambio tras un evento, como una inundación o un deslizamiento.", mat: "Leaflet y capturas procesadas." },
+     { t: "Mapa de cambios", lv: "r", d: "Procesa dos fechas de NISAR y colorea las zonas donde algo cambió.", mat: "Python (rasterio, numpy), herramientas de ASF." }
+   ],
+   skills: ["Programación", "Análisis de imágenes", "Paciencia con datos grandes"] },
+ { n: 7, es: "Giro en el campo: adaptando cultivos con datos de la NASA", en: "Field Shift: Adapting Farms with NASA Data", g: "earth", lv: ["Avanzado", "Intermedio"], youth: false, eff: 4, tags: ["datos", "code", "maker"],
+   que: "Los agricultores deben decidir qué sembrar y en qué orden cuando el clima cambia. El reto pide una herramienta de apoyo a decisiones que combine observaciones de la NASA, datos locales de suelo, características de cada cultivo y las prioridades del agricultor.",
+   pide: "Comparar estrategias de rotación de cultivos según salud del suelo, ahorro de agua y resistencia al cambio climático.",
+   datos: ["NASA POWER (clima y radiación para agricultura)", "SMAP (humedad del suelo)", "Lluvia satelital y vegetación (NDVI)", "Datos abiertos de suelo, como SoilGrids"],
+   ideas: [
+     { t: "¿Qué siembro después del maíz?", lv: "m", d: "Asistente con reglas simples, como que el frijol aporta nitrógeno, y un semáforo de agua disponible.", mat: "HTML y JavaScript, datos de NASA POWER." },
+     { t: "Calendario de siembra", lv: "m", d: "Con la lluvia histórica de Chiquimula propone ventanas de siembra para cada cultivo.", mat: "Python o Excel, API de NASA POWER." },
+     { t: "Sensor de suelo", lv: "r", d: "Medidor de humedad casero que compara su lectura con los datos de SMAP.", mat: "Arduino o ESP32, sensor de humedad de suelo capacitivo." }
+   ],
+   skills: ["Agronomía básica", "Datos y mapas", "Hablar con agricultores"] },
+ { n: 8, es: "Llama en caída libre", en: "Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data", g: "astro", lv: ["Avanzado", "Intermedio"], youth: false, eff: 4, tags: ["code", "datos"],
+   que: "Sin gravedad las llamas se comportan distinto: son más redondas, más frías y a veces azules. La NASA ha hecho décadas de experimentos de combustión en microgravedad. Falta ordenarlos para que alguien pueda sacar lecciones de seguridad contra incendios en naves a la Luna y a Marte.",
+   pide: "Un tablero con inteligencia artificial que resuma, ordene e interprete esos experimentos.",
+   datos: ["NASA Physical Sciences Informatics", "Informes del experimento Saffire (NASA NTRS)", "Reportes de la Estación Espacial"],
+   ideas: [
+     { t: "Biblioteca de experimentos", lv: "m", d: "Buscador con una tarjeta resumen por experimento y filtros por material, tamaño de llama y resultado.", mat: "HTML y JavaScript, resúmenes escritos por el equipo." },
+     { t: "Asistente con citas", lv: "r", d: "Chat que responde preguntas sobre los reportes y siempre muestra de qué documento sale cada dato.", mat: "Python y una API de IA con clave." },
+     { t: "¿Cómo arde una llama sin gravedad?", lv: "b", d: "Animación comparativa de llama con gravedad y sin gravedad, con explicación breve.", mat: "Canvas, Scratch o After Effects. Solo simulación." }
+   ],
+   skills: ["Lectura de reportes técnicos", "IA o programación", "Seguridad"] },
+ { n: 9, es: "Armonización de puntos calientes de MODIS y VIIRS", en: "Harmonization of MODIS and VIIRS Hot Spots", g: "earth", lv: ["Avanzado", "Intermedio"], youth: false, eff: 4, tags: ["datos", "code"],
+   que: "Dos sensores de satélite detectan fuegos desde hace años, pero sus registros no se pueden comparar directamente porque ven con distinto detalle. Hay que unirlos en un solo calendario coherente de actividad de quema.",
+   pide: "Una app web que permita explorar patrones históricos y los periodos críticos de cualquier zona.",
+   datos: ["NASA FIRMS (descarga por país y API gratuita)", "Archivos de MODIS y VIIRS", "Límites administrativos de Guatemala"],
+   ideas: [
+     { t: "Calendario de calor", lv: "m", d: "Mapa de calor de mes contra año con los focos de Guatemala o de Chiquimula.", mat: "Python o JavaScript, CSV de FIRMS." },
+     { t: "Normalizador de sensores", lv: "r", d: "Método para igualar ambos sensores y una gráfica que muestre antes y después.", mat: "Python (pandas, geopandas)." },
+     { t: "Campaña de temporada de quemas", lv: "b", d: "Calendario de riesgo y consejos para agricultores en los meses de más focos.", mat: "Canva y datos agregados de FIRMS." }
+   ],
+   skills: ["Análisis de datos", "Mapas", "Comunicación de riesgo"] },
+ { n: 10, es: "Lugares terrestres análogos a bases lunares y a Marte", en: "Identify Earth Locations that Analog the Permanent Moon Base Locations and Mars", g: "mars", lv: ["Avanzado", "Intermedio", "Principiante/Juvenil"], youth: true, eff: 2, tags: ["datos", "diseno"],
+   que: "Antes de ir a la Luna o a Marte, la NASA prueba equipos en lugares de la Tierra que se les parecen. Se usan desiertos, regiones polares, terreno volcánico y cuevas. El reto es encontrar y describir nuevos sitios así, con datos abiertos de la Tierra, la Luna y Marte.",
+   pide: "Candidatos bien argumentados: qué se parece, qué no, y para qué sirve probarlo ahí. El brief menciona como ejemplos el desierto de Atacama, el cráter Haughton y el Valle de la Muerte.",
+   datos: ["Moon Trek y Mars Trek", "Mapas de relieve y temperatura de la Tierra", "Geología y clima de cada sitio candidato"],
+   ideas: [
+     { t: "Doble terrestre de Marte", lv: "b", d: "Fichas comparativas de 3 lugares con fotos, temperatura y geología junto a las de Marte.", mat: "Canva o Google Sites." },
+     { t: "Candidatos en Guatemala", lv: "m", d: "Mapa que prueba si terrenos volcánicos del país, como el cráter del volcán de Ipala, se parecen a un cráter lunar.", mat: "Mapas, datos de relieve y una hoja de cálculo." },
+     { t: "Puntaje de similitud", lv: "r", d: "Ranking que combina temperatura, humedad, pendiente y composición para ordenar lugares.", mat: "Python o JavaScript con datos abiertos." }
+   ],
+   skills: ["Investigación", "Geografía", "Comparar con criterio"] },
+ { n: 11, es: "Guía de supervivencia interplanetaria: mapa de Marte", en: "Interplanetary Survival Guide: Martian Map", g: "mars", lv: ["Intermedio"], youth: false, eff: 3, tags: ["code", "diseno", "datos"],
+   que: "Un mapa por capas de un lugar o ruta de Marte que combine datos de varias misiones de la NASA. Debe ayudar a futuros astronautas a planear una caminata marciana (Marswalk), seguir las condiciones actuales y hacer ciencia en el camino.",
+   pide: "Un mapa útil de verdad: relieve, riesgos, puntos de interés y condiciones que cambian.",
+   datos: ["Mars Trek", "Imágenes HiRISE y CTX", "Altura del terreno (MOLA)", "Clima de Curiosity y Perseverance"],
+   ideas: [
+     { t: "Mapa de Jezero", lv: "m", d: "Mapa web con 3 capas, relieve, temperatura y puntos de interés científicos.", mat: "Leaflet o MapLibre, imágenes de Mars Trek." },
+     { t: "Ruta segura de 2 km", lv: "r", d: "Calcula una ruta caminable evitando pendientes y rocas y la dibuja sobre el mapa.", mat: "Python o JavaScript, datos de elevación." },
+     { t: "Guía de bolsillo del Marswalk", lv: "b", d: "Lista ilustrada de qué llevar y qué vigilar: oxígeno, polvo, radiación y comunicación.", mat: "Canva." }
+   ],
+   skills: ["Mapas", "Diseño de interfaz", "Programación"] },
+ { n: 12, es: "El Planeta X y SPHEREx", en: "Planet X and SPHEREx", g: "sky", lv: ["Avanzado"], youth: false, eff: 5, tags: ["code", "datos"],
+   que: "El telescopio SPHEREx fotografía todo el cielo en infrarrojo, una y otra vez. Si algo se mueve entre dos fotos, puede ser un cometa, un asteroide o hasta un planeta no descubierto. El reto es dejar que cualquiera vea esos cambios.",
+   pide: "Una herramienta web pública que muestre las imágenes de SPHEREx y deje notar los objetos que cambian de posición.",
+   datos: ["SPHEREx Quick Release en IRSA y AWS Open Data", "Imágenes en formato FITS", "Catálogos de asteroides y cometas conocidos"],
+   ideas: [
+     { t: "Visor parpadeante", lv: "r", d: "Alterna dos fotos de fechas distintas para que se note lo que se movió, como hacían los astrónomos antiguos.", mat: "Python (astropy) y una web simple." },
+     { t: "Cómo cazar un asteroide", lv: "b", d: "Tutorial interactivo con imágenes de ejemplo que enseña a reconocer un objeto móvil.", mat: "Web simple o presentación interactiva." },
+     { t: "Detector automático", lv: "r", d: "Resta imágenes alineadas y marca las fuentes que se movieron.", mat: "Python (astropy, numpy), computadora potente o Colab." }
+   ],
+   skills: ["Programación en Python", "Astronomía", "Procesamiento de imágenes"] },
+ { n: 13, es: "Juego de diseño de misiones espaciales", en: "Space Mission Design Game", g: "play", lv: ["Intermedio", "Principiante/Juvenil"], youth: true, eff: 3, tags: ["code", "diseno"],
+   que: "Un juego donde el jugador diseña, administra y simula una misión espacial completa. Elige objetivo, instrumentos y cohete. Cuida el presupuesto, la masa, la energía, las comunicaciones y la órbita.",
+   pide: "Un juego divertido que enseñe cómo se piensa una misión real y por qué cada decisión importa.",
+   datos: ["Misiones reales en NASA Science", "Tipos de órbita y ecuación del cohete", "Costos y masas de instrumentos de ejemplo"],
+   ideas: [
+     { t: "Constructor de misión por tarjetas", lv: "b", d: "Eliges destino, instrumento y cohete con un tope de presupuesto y masa. Al final ves si la misión tiene éxito.", mat: "HTML y JavaScript." },
+     { t: "Juego de mesa imprimible", lv: "b", d: "Versión con tarjetas y dados para jugar en clase, más una página que guarda los puntos.", mat: "Cartulina, impresora, dados." },
+     { t: "Simulador de órbitas", lv: "r", d: "Lanza un satélite en 2D con gravedad real y trata de dejarlo en órbita.", mat: "Canvas, Godot o Scratch." }
+   ],
+   skills: ["Lógica de juego", "Diseño", "Física básica"] },
+ { n: 14, es: "La jukebox de información de la Tierra", en: "The Earth Information Jukebox", g: "play", lv: ["Intermedio", "Principiante/Juvenil"], youth: true, eff: 2, tags: ["code", "diseno", "maker"],
+   que: "Los datos de la Tierra casi siempre se ven en gráficas. Aquí se escuchan. Hay que emparejar las visualizaciones del Centro de Información de la Tierra de la NASA con sonido generado en tiempo real, para que más personas entiendan la ciencia, incluidas las que no ven bien.",
+   pide: "Una interfaz, un script o una app que convierta datos de la Tierra en una experiencia sonora.",
+   datos: ["NASA Earth Information Center", "Worldview y GIBS", "Series de temperatura, hielo y dióxido de carbono"],
+   ideas: [
+     { t: "Temperatura que suena", lv: "b", d: "Cada valor se convierte en una nota: más calor, más agudo. Dan play y escuchan 40 años de cambios.", mat: "JavaScript con Web Audio o Tone.js." },
+     { t: "Mapa que suena", lv: "m", d: "Al pasar el cursor por regiones cambia el timbre según vegetación o temperatura.", mat: "Web con mapa, Tone.js y datos de ejemplo." },
+     { t: "Instrumento con sensores", lv: "r", d: "Caja con perillas que representan variables de la Tierra y generan música.", mat: "Arduino o micro:bit, potenciómetros, bocina." }
+   ],
+   skills: ["Música o audio", "JavaScript", "Creatividad"] }
+];
+
+var LVNAME = { b: "Básico", m: "Medio", r: "Retador" };
+var state = { g: "all", i: "all" };
+
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+
+function pips(n, cls) {
+  var h = "";
+  for (var k = 1; k <= 5; k++) h += '<i class="pip' + (k <= n ? " on" : "") + '"></i>';
+  return h;
+}
+
+function buildMap() {
+  document.getElementById("map").innerHTML = R.map(function (r) {
+    return '<a class="tile" href="#r' + r.n + '" style="--c:' + G[r.g].c + '">' +
+      '<div class="top"><span class="n">' + r.n + '</span>' + icon(r.n) + '</div>' +
+      '<div class="t">' + esc(r.es) + '</div>' +
+      '<div class="d" aria-label="Esfuerzo estimado ' + r.eff + ' de 5">' + pips(r.eff) + '</div></a>';
+  }).join("");
+}
+
+function buildCards() {
+  document.getElementById("cards").innerHTML = R.map(function (r) {
+    var pills = '<span class="pill grp">' + G[r.g].n + '</span>' +
+      r.lv.map(function (l) { return '<span class="pill">Oficial: ' + l + '</span>'; }).join("") +
+      (r.youth ? '<span class="pill youth">Apto para empezar</span>' : "");
+    var ideas = r.ideas.map(function (x) {
+      return '<div class="idea"><div class="h"><b>' + esc(x.t) + '</b><span class="lv ' + x.lv + '">' + LVNAME[x.lv] + '</span></div>' +
+        '<p>' + esc(x.d) + '</p><div class="mat"><span>Materiales</span>' + esc(x.mat) + '</div></div>';
+    }).join("");
+    return '<article class="card" id="r' + r.n + '" data-g="' + r.g + '" data-tags="' + r.tags.join(" ") + '" style="--c:' + G[r.g].c + '">' +
+      '<header><div class="badge"><b>' + r.n + '</b>' + icon(r.n) + '</div><div><h3>' + esc(r.es) + '</h3><div class="en">' + esc(r.en) + '</div><div class="pills">' + pills + '</div></div></header>' +
+      '<div class="body"><div>' +
+        '<div><div class="lbl">De qué trata</div><p>' + esc(r.que) + '</p></div>' +
+        '<div><div class="lbl">Qué te piden</div><p>' + esc(r.pide) + '</p></div>' +
+        '<div><div class="lbl">Datos y recursos</div><ul>' + r.datos.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join("") + '</ul></div>' +
+      '</div><div><div class="lbl">3 propuestas de proyecto</div>' + ideas + '</div></div>' +
+      '<footer><div class="meter"><div class="pips">' + pips(r.eff) + '</div><small>Esfuerzo estimado: ' + r.eff + ' de 5</small></div>' +
+      '<div class="skills">' + r.skills.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join("") + '</div></footer></article>';
+  }).join("");
+}
+
+function chip(label, key, val, group) {
+  return '<button type="button" class="chip" data-k="' + key + '" data-v="' + val + '" aria-pressed="' + (state[key] === val) + '">' + label + '</button>';
+}
+
+function buildFilters() {
+  var fg = chip("Todos", "g", "all") + chip("Para empezar", "g", "youth");
+  Object.keys(G).forEach(function (k) { fg += chip(G[k].n, "g", k); });
+  document.getElementById("fg").innerHTML = fg;
+  var fi = chip("Todo", "i", "all");
+  Object.keys(INT).forEach(function (k) { fi += chip(INT[k], "i", k); });
+  document.getElementById("fi").innerHTML = fi;
+}
+
+function apply() {
+  var shown = 0;
+  R.forEach(function (r) {
+    var el = document.getElementById("r" + r.n);
+    var okG = state.g === "all" || (state.g === "youth" ? r.youth : r.g === state.g);
+    var okI = state.i === "all" || r.tags.indexOf(state.i) > -1;
+    var ok = okG && okI;
+    el.hidden = !ok;
+    if (ok) shown++;
+  });
+  document.getElementById("count").textContent = shown === 14 ? "Mostrando los 14 retos" : "Mostrando " + shown + " de 14 retos" + (shown === 0 ? ". Prueba otra combinación de filtros." : "");
+  document.querySelectorAll(".chip").forEach(function (b) {
+    b.setAttribute("aria-pressed", String(state[b.getAttribute("data-k")] === b.getAttribute("data-v")));
+  });
+}
+
+document.addEventListener("click", function (e) {
+  var b = e.target.closest && e.target.closest(".chip");
+  if (!b) return;
+  state[b.getAttribute("data-k")] = b.getAttribute("data-v");
+  apply();
+});
+
+buildMap(); buildCards(); buildFilters(); apply();
+</script>
+
+</body></html>
